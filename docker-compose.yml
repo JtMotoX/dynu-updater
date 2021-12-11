@@ -1,0 +1,16 @@
+version: '3'
+
+volumes:
+  dynu-updater-data:
+
+services:
+  dynu-updater:
+    build: ./build/
+    container_name: dynu-updater
+    env_file: .env
+    restart: always
+    volumes:
+      # TIMEZONE
+      - /etc/localtime:/etc/localtime:ro
+      # DATA
+      - dynu-updater-data:/data
