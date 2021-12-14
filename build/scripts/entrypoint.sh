@@ -1,7 +1,7 @@
 #!/bin/sh
 
-touch /data/dynu-updater.log
-tail -f -n0 /data/dynu-updater.log &
+touch /var/log/dynu-updater/dynu-updater.log
+tail -f -n0 /var/log/dynu-updater/dynu-updater.log &
 
 touch /tmp/crond.log
 tail -f /tmp/crond.log &

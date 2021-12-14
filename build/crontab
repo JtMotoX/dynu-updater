@@ -1,2 +1,2 @@
-*/5 * * * * /scripts/dynu-updater.sh | ts '%Y-%m-%d %H:%M:%S %Z -' >>/data/dynu-updater.log 2>&1
+*/5 * * * * /scripts/dynu-updater.sh | ts '%Y-%m-%d %H:%M:%S %Z -' >>/var/log/dynu-updater/dynu-updater.log 2>&1
 # BLANK LINE AT END OF CRONTAB

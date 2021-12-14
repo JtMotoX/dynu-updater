@@ -14,3 +14,5 @@ services:
       - /etc/localtime:/etc/localtime:ro
       # DATA
       - dynu-updater-data:/data
+      # LOGS
+      - ./logs:/var/log/dynu-updater
