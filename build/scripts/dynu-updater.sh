@@ -55,14 +55,13 @@ echo "Dynu IP changed to $ip for ${dynu_location}"
 echo $result
 
 # SEND EMAIL NOTIFICATION
-if [[ ! -z "$mail_to" ]]; then
-	mail_file="/tmp/mail.txt"
-	echo -e "Dynu IP changed to $ip for ${dynu_location}\n$result" >"${mail_file}"
-	curl \
-		--silent \
-		--url "smtps://smtp.gmail.com:465" \
-		--user "${mail_user}" \
-		--mail-from "${mail_from}" \
-		--mail-rcpt "${mail_to}" \
-		--upload-file "${mail_file}"
+if [[ ! -z "${MAIL_TO_EMAIL}" ]]; then
+	printf '%s\n' \
+		"Subject: Dynamic IP Updated" \
+		"From: Dynu Updater - ${HOST_HOSTNAME} <${MAIL_FROM_EMAIL}>" \
+		"To: ${MAIL_TO_NAME} <${MAIL_TO_EMAIL}>" \
+		"" \
+		"Dynu IP changed to $ip for ${dynu_location}" \
+		"$result" | \
+		msmtp --user="${MAIL_FROM_EMAIL}" --passwordeval="echo ${MAIL_FROM_PASS}" --host=${MAIL_HOST} --port=${MAIL_PORT} -t --read-envelope-from --auth=on --tls=on --tls-starttls=on --logfile="${MSMTP_LOG_FILE}"
 fi
