@@ -3,7 +3,7 @@
 cd $(dirname "$0")
 
 # FUNCTION TO VALIDATE A VARIABLE IS NOT EMPTY
-function validate_variable() {
+validate_variable() {
 	variable_key="$1"
 	variable_value=$(eval "echo \$${variable_key}")
 	if [ -z "${variable_value}" ]; then
