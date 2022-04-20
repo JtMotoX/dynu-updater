@@ -15,4 +15,5 @@ services:
       # DATA
       - dynu-updater-data:/data
       # LOGS
-      - ./logs:/var/log/dynu-updater
+      - ./logs/dynu-updater:/var/log/dynu-updater
+      - ./logs/msmtp:/var/log/msmtp
