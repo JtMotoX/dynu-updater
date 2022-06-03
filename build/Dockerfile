@@ -20,4 +20,5 @@ RUN chmod 644 /etc/crontabs/root
 COPY ./scripts /scripts
 RUN chmod 755 /scripts/*.sh
 
+CMD [ "run" ]
 ENTRYPOINT ["/scripts/entrypoint.sh"]
