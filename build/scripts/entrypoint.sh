@@ -1,5 +1,7 @@
 #!/bin/sh
 
+set -e
+
 # CONVERT 1PASSWORD ENVIRONMENT VARIABLES
 if env | grep -E '^[^=]*=OP:' >/dev/null; then
 	curl -s -o /tmp/1password-vars.sh "https://raw.githubusercontent.com/JtMotoX/1password-docker/main/1password/op-vars.sh"
@@ -21,6 +23,7 @@ if [ "$1" = "run" ]; then
 	tail -f /tmp/crond.log &
 
 	crond -f -l 8 -L /tmp/crond.log
+	exit
 fi
 
 exec "$@"
