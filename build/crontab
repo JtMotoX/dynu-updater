@@ -1,1 +1,1 @@
-* * * * * /scripts/dynu-updater.sh | sed '/^\s*$/d' | awk '{ print strftime("[%Y-%m-%d %H:%M:%S]"), $0 }' >>/var/log/dynu-updater/dynu-updater.log 2>&1
+*/5 * * * * /scripts/dynu-updater.sh | sed '/^\s*$/d' | awk '{ print strftime("[%Y-%m-%d %H:%M:%S]"), $0 }' >>/var/log/dynu-updater/dynu-updater.log 2>&1
