@@ -39,7 +39,7 @@ if [ "$1" = "run" ]; then
 	tail -f /tmp/crond.log &
 
 	supercronic ~/crontab >/tmp/crond.log 2>&1
-	exit
+	exit 1
 fi
 
 exec "$@"
