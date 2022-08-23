@@ -13,7 +13,7 @@ services:
       # TIMEZONE
       - /etc/localtime:/etc/localtime:ro
       # DATA
-      - dynu-updater-data:/data
+      - ./data:/data
       # LOGS
       - ./logs/dynu-updater:/var/log/dynu-updater
       - ./logs/msmtp:/var/log/msmtp

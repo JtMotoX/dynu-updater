@@ -1,2 +1,1 @@
-*/5 * * * * /scripts/dynu-updater.sh | ts '%Y-%m-%d %H:%M:%S %Z -' >>/var/log/dynu-updater/dynu-updater.log 2>&1
-# BLANK LINE AT END OF CRONTAB
+* * * * * /scripts/dynu-updater.sh | sed '/^\s*$/d' | awk '{ print strftime("[%Y-%m-%d %H:%M:%S]"), $0 }' >>/var/log/dynu-updater/dynu-updater.log 2>&1

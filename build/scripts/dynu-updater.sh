@@ -33,7 +33,7 @@ else
 fi
 
 # CHECK IF IP CHANGED
-oldip=$(cat /data/ip.txt 2> /dev/nul)
+oldip=$(cat /data/ip.txt 2> /dev/null)
 if [[ "$ip" = "$oldip" ]]; then
 	echo "IP same"
 	exit 0

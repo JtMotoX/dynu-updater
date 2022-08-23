@@ -11,18 +11,34 @@ if env | grep -E '^[^=]*=OP:' >/dev/null; then
 fi
 
 if [ "$1" = "run" ]; then
+	# MAKE SURE WE HAVE ACCESS TO THE DATA DIRECTORY
+	if [ ! -w /data ]; then
+		echo "ERROR: No write access to 'data' directory"
+		echo "Note: 'chmod -R 777 data'"
+		exit 1
+	fi
+
 	# MAKE SURE WE HAVE ACCESS TO MAIL LOGS
 	touch ${MSMTP_LOG_FILE} >/dev/null 2>&1 || true
-	[ -w ${MSMTP_LOG_FILE} ] || { "No write access to ${MSMTP_LOG_FILE}"; exit 1; }
+	if [ ! -w ${MSMTP_LOG_FILE} ]; then
+		echo "ERROR: No write access to $(basename ${MSMTP_LOG_FILE})"
+		echo "Note: 'chmod 777 $(basename ${MSMTP_LOG_FILE})'"
+		exit 1
+	fi
 
-	mkdir -p /var/log/dynu-updater
-	touch /var/log/dynu-updater/dynu-updater.log
-	tail -f -n0 /var/log/dynu-updater/dynu-updater.log &
+	# MAKE SURE WE HAVE ACCESS TO DYNU LOGS
+	touch ${DYNU_LOG_FILE} >/dev/null 2>&1 || true
+	if [ ! -w ${DYNU_LOG_FILE} ]; then
+		echo "ERROR: No write access to $(basename ${DYNU_LOG_FILE})"
+		echo "Note: 'chmod 777 $(basename ${DYNU_LOG_FILE})'"
+		exit 1
+	fi
+	tail -f -n0 "${DYNU_LOG_FILE}" &
 
 	touch /tmp/crond.log
 	tail -f /tmp/crond.log &
 
-	crond -f -l 8 -L /tmp/crond.log
+	supercronic ~/crontab >/tmp/crond.log 2>&1
 	exit
 fi
 
