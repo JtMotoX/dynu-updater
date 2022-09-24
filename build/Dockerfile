@@ -4,11 +4,8 @@ RUN apk add --no-cache curl
 
 # SETUP USER
 ARG USER_NAME=appuser
-ARG USER_ID=1001
-ARG GROUP_NAME=appgroup
-ARG GROUP_ID=2001
-RUN addgroup -g ${GROUP_ID} -S ${GROUP_NAME} && \
-	adduser -u ${USER_ID} -S ${USER_NAME} -G ${GROUP_NAME}
+ARG USER_ID=9001
+RUN adduser -u ${USER_ID} -S ${USER_NAME}
 
 # INSTALL MSMTP MAIL SERVER
 RUN apk add --no-cache openssl msmtp
@@ -29,12 +26,12 @@ RUN mkdir -p $(dirname ${DYNU_LOG_FILE})
 ENV SUPERCRONIC_VERSION="v0.2.1"
 RUN wget https://github.com/aptible/supercronic/releases/download/${SUPERCRONIC_VERSION}/supercronic-linux-amd64 -O /usr/local/bin/supercronic && \
 	chmod 755 /usr/local/bin/supercronic
-COPY --chown=${USER_NAME}:${GROUP_NAME} --chmod=644 ./crontab /home/${USER_NAME}/crontab
+COPY --chown=root --chmod=644 ./crontab /home/${USER_NAME}/crontab
 RUN supercronic -json -test /home/${USER_NAME}/crontab
 
 COPY --chmod=755 ./scripts /scripts
 
-USER ${USER_NAME}
+USER ${USER_ID}:${USER_ID}
 
 ENTRYPOINT ["/scripts/entrypoint.sh"]
 CMD [ "run" ]

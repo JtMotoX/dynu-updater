@@ -14,7 +14,7 @@ if [ "$1" = "run" ]; then
 	# MAKE SURE WE HAVE ACCESS TO THE DATA DIRECTORY
 	if [ ! -w /data ]; then
 		echo "ERROR: No write access to 'data' directory"
-		echo "Note: 'chmod -R 777 data'"
+		echo "Note: 'chown -R $(id -u) data'"
 		exit 1
 	fi
 
@@ -22,7 +22,7 @@ if [ "$1" = "run" ]; then
 	touch ${MSMTP_LOG_FILE} >/dev/null 2>&1 || true
 	if [ ! -w ${MSMTP_LOG_FILE} ]; then
 		echo "ERROR: No write access to $(basename ${MSMTP_LOG_FILE})"
-		echo "Note: 'chmod 777 $(basename ${MSMTP_LOG_FILE})'"
+		echo "Note: 'chown -R $(id -u) $(basename ${MSMTP_LOG_FILE})'"
 		exit 1
 	fi
 
@@ -30,7 +30,7 @@ if [ "$1" = "run" ]; then
 	touch ${DYNU_LOG_FILE} >/dev/null 2>&1 || true
 	if [ ! -w ${DYNU_LOG_FILE} ]; then
 		echo "ERROR: No write access to $(basename ${DYNU_LOG_FILE})"
-		echo "Note: 'chmod 777 $(basename ${DYNU_LOG_FILE})'"
+		echo "Note: 'chown -R $(id -u) $(basename ${DYNU_LOG_FILE})'"
 		exit 1
 	fi
 	tail -f -n0 "${DYNU_LOG_FILE}" &
